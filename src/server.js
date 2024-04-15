@@ -4,7 +4,11 @@ const express = require('express');
 const app = express();
 
 const PORT = 3333;
-
 app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`)
+    console.log(`Servidor rodando na porta ${PORT}`);
+})
+
+
+app.get('/', (request, res) => {
+    res.send('Hello, World');
 })
