@@ -8,6 +8,8 @@ app.listen(PORT, () => {
 })
 
 
-app.get('/message', (request, response) => {
-    res.send('Hello, World');
+app.get('/message/:user/:id', (request, response) => {
+    const { user, id } = request.params;
+
+    response.send(`Na url está ${user} e ${id}`);
 })
