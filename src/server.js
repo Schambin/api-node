@@ -1,22 +1,15 @@
 const express = require('express');
 
 const app = express();
+app.use(express.json())
 
 const PORT = 3333;
+
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 })
 
-//Route Params
-app.get('/message/:user/:id', (request, response) => {
-    const { user, id } = request.params;
-
-    response.send(`Na url está ${user} e ${id}`);
-})
-
-//Query Params
-app.get('/products', (request, response) => {
-    const { page, limit } = request.query;
-
-    response.send(`Página ${page}. Mensagens: ${limit}`)
-})
+app.post('/users', (request, response) => {
+    const { name, password, email } = request.body;
+    response.send(`Você chamou a rota post. ${name} ${email} ${password}`);
+});
