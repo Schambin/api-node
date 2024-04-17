@@ -1,15 +1,10 @@
 const express = require('express');
 
+const routes = require('./routes');
+
 const app = express();
-app.use(express.json())
+app.use(express.json());
+app.use(routes);
 
 const PORT = 3333;
-
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-})
-
-app.post('/users', (request, response) => {
-    const { name, password, email } = request.body;
-    response.send(`Você chamou a rota post. ${name} ${email} ${password}`);
-});
+app.listen(PORT, () =>  console.log(`Servidor rodando na porta ${PORT}`));
