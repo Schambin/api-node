@@ -1,14 +1,22 @@
 const AppError = require('../utils/app-error');
 
-class UsersController {
-    create(req, res) {
-        const { name, password, email, isAdmin } = req.body;
+const sqliteConnection = require('../database/sqlite')
 
-        if (!name || !email) {
-            throw new AppError('Nome ou Email inválido.')
+class UsersController {
+    async create(req, res) {
+        const { name, password, email } = req.body;
+
+        const database = await sqliteConnection();
+        const checkIfUserExists = await database.get("SELECT * FROM users WHERE email = (?)", [email])
+
+        if (checkIfUserExists) {
+            throw new AppError('Este email já está em uso')
         }
 
-        res.status(201).json({ name, email, password, isAdmin });
+        await database.run("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", [name, email, password])
+
+        return res.status(201).json();
+
     }
 }
 
