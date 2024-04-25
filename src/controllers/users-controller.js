@@ -54,8 +54,7 @@ class UsersController {
                 throw new AppError('Senha antiga está incorreta');
             }
 
-            const hashedPassword = await hash(password, 8);
-            user.password = hashedPassword;
+            user.password = await hash(password, 8);
         }
 
         await database.run(`
