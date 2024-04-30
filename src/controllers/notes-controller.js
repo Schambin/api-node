@@ -58,7 +58,10 @@ class NotesController {
     async list(req, res) {
         const { user_id } = req.query;
 
-        const notes = await knex('notes').where({ user_id }).orderBy('id');
+        const notes = await knex('notes')
+        .where({ user_id })
+        .whereLike('title', `%${title}%`)
+        .orderBy('id');
 
         return res.json({
             notes
